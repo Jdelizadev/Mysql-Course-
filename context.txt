@@ -36,4 +36,12 @@ create table if not exists bills (
     created_at timestamp not null default current_timestamp,
     modified_at timestamp not null default current_timestamp on update current_timestamp,
     foreign key (client_id) references clients(client_id)
+    on delete cascade
+    on update cascade
 );  
+
+insert into clients(client_id, name, email) values(10,'Jaime', 'jaime@email.com')
+
+insert into bills(client_id, total) values(10, 15.50);
+
+update clients set client_id = 11 where client_id = 10;
