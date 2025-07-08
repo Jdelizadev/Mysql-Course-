@@ -1,0 +1,39 @@
+//Para poder inicializar el mysql bash, primero debes ver que este en modo sql y no en modo js, con el comando \sql, despues dentro de los servicios de windows, debes ver que este en ejecucion el de mysql, posteriormente, ya te puedes conectar con el comando \connect root@localhost.
+//Una primary key es un dato especifico dentro de una tabla que a traves del dato o fila a la que se la vas a asignar, te va a permitir hacer registros unicos y poder diferenciarlos cada uno del resto
+//La clave del mysqlbench es jaime2025
+//Los comandos que hemos visto: 
+-show databases; para ver las bd que tenemos creadas
+-use 'nombrede la bd': para entrar y ver el contenido
+-show tables: para ver las tablas especificamente de esa bd 
+-desc 'nombretabla': para ver la tabla desplegada y su contenido (desc es de describe)
+-drop table 'nombretabla': para desechar cualquier tabla de la bd
+-show create table 'nombretabla': te muestra la informacion detallada de esa tabla;
+
+
+CREATE TABLE if not exists clients (
+    client_id integer primary key auto_increment,
+    name varchar (100) not null,
+    email varchar (60) not null unique,
+    phone_number varchar (15),
+    created_at timestamp not null default current_timestamp,
+    modified_at timestamp not null default current_timestamp on update current_timestamp
+);
+
+create table if not exists products (
+    product_id integer primary key auto_increment,
+    name varchar(100) not null,
+    slug varchar(100) not null unique,
+    description text, 
+    created_at timestamp not null default current_timestamp,
+    modified_at timestamp not null default current_timestamp on update current_timestamp
+);
+
+create table if not exists bills (
+    bill_id integer primary key auto_increment,
+    client_id integer not null,
+    total float, 
+    status enum ('open','paid','lost') not null default 'open',  
+    created_at timestamp not null default current_timestamp,
+    modified_at timestamp not null default current_timestamp on update current_timestamp,
+    foreign key (client_id) references clients(client_id)
+);  
